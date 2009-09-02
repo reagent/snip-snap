@@ -10,6 +10,15 @@ module SnipSnap
         s = SnipSnap::Skitch.new(@url)
         s.url.should == @url
       end
+      
+      should "use a GET request when retrieving the response" do
+        response = stub()
+        
+        s = SnipSnap::Skitch.new(@url)
+        s.expects(:get).with().returns(response)
+        
+        s.response.should == response
+      end
             
       should "be able to return an image url for a given url" do
         s = SnipSnap::Skitch.new(@url)

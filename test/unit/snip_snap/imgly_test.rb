@@ -10,16 +10,25 @@ module SnipSnap
       end
 
       should "have a url expanded from the source" do
-        i = SnipSnap::Imgly.new('http://img.ly/3aa')
-        i.url.should == 'http://img.ly/show/large/3aa'
+        i = SnipSnap::Imgly.new(@url)
+        i.url.should == @expanded_url
+      end
+      
+      should "use a HEAD request when retrieving the response" do
+        response = stub()
+        
+        i = SnipSnap::Imgly.new(@url)
+        i.expects(:head).with().returns(response)
+        
+        i.response.should == response
       end
       
       should "be able to return an image url for a given url" do
-        client = stub()
-        client.stubs(:last_effective_url).with().returns(@expanded_url)
+        response = stub()
+        response.stubs(:last_effective_url).with().returns(@expanded_url)
         
         i = SnipSnap::Imgly.new(@url)
-        i.stubs(:response).with().returns(client)
+        i.stubs(:response).with().returns(response)
         
         i.image_url.should == @expanded_url
       end
