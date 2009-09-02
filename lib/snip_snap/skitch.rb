@@ -1,19 +1,9 @@
 module SnipSnap
   class Skitch
+
+    include Client
     
-    attr_reader :url
-    
-    def initialize(url)
-      @url = url
-    end
-    
-    def fetch
-      Curl::Easy.http_get(url)
-    end
-    
-    def response
-      @response ||= fetch
-    end
+    request_method :get
     
     def image_url
       body = response.body_str
