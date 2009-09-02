@@ -3,10 +3,6 @@ require File.dirname(__FILE__) + '/../../test_helper'
 module SnipSnap
   class SkitchTest < Test::Unit::TestCase
 
-    def read_fixture(filename)
-      File.read(File.dirname(__FILE__) + '/../../fixtures/' + filename)
-    end
-    
     context "An instance of the Skitch class" do
       setup { @url = 'http://skitch.com/example' }
       

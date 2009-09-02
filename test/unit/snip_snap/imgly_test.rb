@@ -9,7 +9,6 @@ module SnipSnap
         @expanded_url = 'http://img.ly/show/large/3aa'
       end
 
-      
       should "have a url expanded from the source" do
         i = SnipSnap::Imgly.new('http://img.ly/3aa')
         i.url.should == 'http://img.ly/show/large/3aa'
