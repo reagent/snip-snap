@@ -1,5 +1,5 @@
 module SnipSnap
-  module Client
+  module Client # :nodoc:
 
     module InstanceMethods
       

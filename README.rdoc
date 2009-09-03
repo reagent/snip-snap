@@ -2,7 +2,10 @@
 
 == Description
 
-Describe your gem here ... 
+SnipSnap is a Ruby library that will allow you to extract the URL of an image from
+one of many popular image sharing services.  Just give it the shortened URL and it can
+give you the full URL to the embedded image.  This library currently supports Img.ly,
+Skitch, Twitpic, and Yfrog - others are coming.
 
 == Installation
 
@@ -10,11 +13,15 @@ Describe your gem here ...
 
 == Usage
 
+    require 'rubygems
     require 'snip_snap'
+    
+    client = SnipSnap.factory('http://yfrog.com/7hb9lj')
+    puts client.image_url
 
 == License
 
-Copyright (c) <year> <copyright holders>
+Copyright (c) 2009 Patrick Reagan (reaganpr@gmail.com)
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
