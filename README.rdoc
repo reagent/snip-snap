@@ -9,7 +9,7 @@ Skitch, Twitpic, and Yfrog - others are coming.
 
 == Installation
 
-    sudo gem install snip-snap
+    sudo gem install snip-snap --source=http://gemcutter.org
 
 == Usage
 
