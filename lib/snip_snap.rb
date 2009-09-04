@@ -25,7 +25,7 @@ require 'snip_snap/twitpic'
 #  require 'rubygems'
 #  require 'snip_snap'
 #
-#  client = SnipSnap.factory('http://yfrog.com/7hb9lj')
+#  client = SnipSnap.from_url('http://yfrog.com/7hb9lj')
 #  puts client.image_url
 #
 # That's it.
@@ -42,7 +42,7 @@ module SnipSnap
   end
 
   # Use the correct class to handle image extraction for a given URL
-  def self.factory(url)
+  def self.from_url(url)
     const_get(class_name_for(url)).new(url)
   end
   

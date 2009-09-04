@@ -28,28 +28,28 @@ class SnipSnapTest < Test::Unit::TestCase
       url = 'http://skitch.com/reagent/bh4ei/bleeergh'
       SnipSnap::Skitch.expects(:new).with(url).returns('skitch')
       
-      SnipSnap.factory(url).should == 'skitch'
+      SnipSnap.from_url(url).should == 'skitch'
     end
     
     should "be able to create an instance of the Imgly class with the supplied URL" do
       url = 'http://img.ly/3ey'
       SnipSnap::Imgly.expects(:new).with(url).returns('imgly')
       
-      SnipSnap.factory(url).should == 'imgly'
+      SnipSnap.from_url(url).should == 'imgly'
     end
     
     should "be able to create an instance of the Twitpic class with the supplied URL" do
       url = 'http://twitpic.com/203o0'
       SnipSnap::Twitpic.expects(:new).with(url).returns('twitpic')
 
-      SnipSnap.factory(url).should == 'twitpic'
+      SnipSnap.from_url(url).should == 'twitpic'
     end
 
     should "be able to create an instance of the Yfrog class with the supplied URL" do
       url = 'http://yfrog.com/ahb97j'
       SnipSnap::Yfrog.expects(:new).with(url).returns('yfrog')
 
-      SnipSnap.factory(url).should == 'yfrog'
+      SnipSnap.from_url(url).should == 'yfrog'
     end
     
   end
