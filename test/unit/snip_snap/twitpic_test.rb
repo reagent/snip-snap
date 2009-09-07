@@ -14,15 +14,6 @@ module SnipSnap
         t.url.should == @expanded_url
       end
       
-      should "use a HEAD request when retrieving the response" do
-        response = stub()
-        
-        t = SnipSnap::Twitpic.new(@url)
-        t.expects(:head).with().returns(response)
-        
-        t.response.should == response
-      end
-      
       should "be able to return an image url for a given url" do
         response = stub()
         response.stubs(:last_effective_url).with().returns(@expanded_url)

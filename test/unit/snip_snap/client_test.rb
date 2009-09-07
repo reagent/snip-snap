@@ -19,84 +19,85 @@ module SnipSnap
     
     context "An instance of the ClientImplementation class" do
       
-      should "be able to make a get request" do
-        url = 'http://example.com'
+      should "be able to fetch a response" do
+        response = stub()
         
-        client = mock() do |c|
-          c.expects(:http_get).with()
-        end
+        c = ClientImplementation.new('http://example.com')
+        c.expects(:fetch).once.with().returns(response)
         
-        config = mock() do |c|
-          c.expects(:follow_location=).with(true)
-          c.expects(:max_redirects=).with(5)
-        end
-        
-        Curl::Easy.expects(:new).with(url).yields(config).returns(client)
-        
-        c = ClientImplementation.new(url)
-        c.get.should == client
+        c.response.should == response
       end
       
-      should "be able to make a head request" do
-        url = 'http://example.com'
+      should "cache the response object" do
+        response = stub()
         
-        client = mock() do |c|
-          c.expects(:http_head).with()
-        end
+        c = ClientImplementation.new('http://example.com')
+        c.expects(:fetch).once.with().returns(response)
         
-        config = mock() do |c|
-          c.expects(:follow_location=).with(true)
-          c.expects(:max_redirects=).with(5)
-        end
-        
-        Curl::Easy.expects(:new).with(url).yields(config).returns(client)
-        
-        c = ClientImplementation.new(url)
-        c.head.should == client
+        2.times { c.response }
+      end
+      
+    end
+    
+    context "The ClientGetImplementation class" do
+      
+      should "know that it doesn't make a head request" do
+        ClientGetImplementation.head?.should be(false)
       end
       
     end
     
     context "An instance of the ClientGetImplementation class" do
       
-      should "fetch a response using a GET request when calling response" do
-        response = stub()
+      should "fetch a response using a GET request" do
+        url = 'http://example.com'
         
-        c = ClientGetImplementation.new('http://example.com')
-        c.expects(:get).with().returns(response)
+        client = mock() do |c|
+          c.expects(:perform).with()
+        end
         
-        c.response.should == response
+        config = mock() do |c|
+          c.expects(:follow_location=).with(true)
+          c.expects(:max_redirects=).with(5)
+          c.expects(:head=).with(false)
+        end
+        
+        Curl::Easy.expects(:new).with(url).yields(config).returns(client)
+        
+        c = ClientGetImplementation.new(url)
+        c.fetch.should == client
       end
       
-      should "cache the response object" do
-        response = stub()
-        
-        c = ClientGetImplementation.new('http://example.com')
-        c.expects(:get).once.with().returns(response)
-        
-        2.times { c.response.should }
+    end
+    
+    
+    context "The ClientHeadImplementation class" do
+
+      should "know that it doesn't makes a head request" do
+        ClientHeadImplementation.head?.should be(true)
       end
       
     end
     
     context "An instance of the ClientHeadImplementation class" do
       
-      should "fetch a response using a GET request when calling response" do
-        response = stub()
+      should "fetch a response using a HEAD request" do
+        url = 'http://example.com'
         
-        c = ClientHeadImplementation.new('http://example.com')
-        c.expects(:head).with().returns(response)
+        client = mock() do |c|
+          c.expects(:perform).with()
+        end
         
-        c.response.should == response
-      end
-      
-      should "cache the response object" do
-        response = stub()
+        config = mock() do |c|
+          c.expects(:follow_location=).with(true)
+          c.expects(:max_redirects=).with(5)
+          c.expects(:head=).with(true)
+        end
         
-        c = ClientHeadImplementation.new('http://example.com')
-        c.expects(:head).once.with().returns(response)
+        Curl::Easy.expects(:new).with(url).yields(config).returns(client)
         
-        2.times { c.response.should }
+        c = ClientHeadImplementation.new(url)
+        c.fetch.should == client
       end
       
     end

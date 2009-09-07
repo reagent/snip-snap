@@ -14,15 +14,6 @@ module SnipSnap
         y.url.should == @expanded_url
       end
       
-      should "use a GET request when retrieving the response" do
-        response = stub()
-        
-        y = SnipSnap::Yfrog.new(@url)
-        y.expects(:get).with().returns(response)
-        
-        y.response.should == response
-      end
-      
       should "be able to return an image url for a given url" do
         y = SnipSnap::Yfrog.new(@url)
         

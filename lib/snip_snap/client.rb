@@ -9,23 +9,20 @@ module SnipSnap
         @url = url
       end
       
-      def get
-        get_response {|c| c.http_get }
-      end
-
-      def head
-        get_response {|c| c.http_head }
-      end
-
-      def get_response(&block)
+      def fetch
         client = Curl::Easy.new(url) do |config|
           config.follow_location = true
-          config.max_redirects = 5
+          config.max_redirects   = 5
+          config.head            = self.class.head?
         end
 
-        block.call(client)
+        client.perform
 
         client
+      end
+      
+      def response
+        @response ||= fetch
       end
 
     end
@@ -33,11 +30,11 @@ module SnipSnap
     module ClassMethods
       
       def request_method(method_name)
-        class_eval <<-CODE
-          def response
-            @response ||= #{method_name}
-          end
-        CODE
+        @request_method = method_name
+      end
+      
+      def head?
+        @request_method == :head
       end
       
     end
