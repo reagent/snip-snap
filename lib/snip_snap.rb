@@ -1,6 +1,7 @@
 $:.unshift File.dirname(__FILE__)
 
 require 'curb'
+require 'fleakr'
 require 'uri'
 
 require 'snip_snap/client'
@@ -9,6 +10,7 @@ require 'snip_snap/skitch'
 require 'snip_snap/imgly'
 require 'snip_snap/yfrog'
 require 'snip_snap/twitpic'
+require 'snip_snap/flickr'
 
 # = SnipSnap
 #
@@ -19,6 +21,7 @@ require 'snip_snap/twitpic'
 # * Skitch
 # * Twitpic
 # * Yfrog
+# * Flickr
 #
 # To use, just point it at a URL:
 # 
@@ -37,7 +40,8 @@ module SnipSnap
       'skitch.com'  => 'Skitch',
       'img.ly'      => 'Imgly',
       'twitpic.com' => 'Twitpic',
-      'yfrog.com'   => 'Yfrog'
+      'yfrog.com'   => 'Yfrog',
+      'flic.kr'     => 'Flickr'
     }
   end
 
@@ -49,6 +53,11 @@ module SnipSnap
   def self.class_name_for(url) # :nodoc:
     uri = URI.parse(url)
     host_map[uri.host]
+  end
+  
+  # Set the Flickr API key for use by the underlying Flickr API library
+  def self.flickr_api_key=(key)
+    Fleakr.api_key = key
   end
   
 end
