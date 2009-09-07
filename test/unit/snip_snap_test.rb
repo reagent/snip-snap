@@ -19,14 +19,24 @@ class SnipSnapTest < Test::Unit::TestCase
       SnipSnap.class_name_for(url).should == 'Twitpic'
     end
     
-    should "know the correct class name for a Yfrog URL" do
+    should "know the correct class name for a Yfrog.com URL" do
       url = 'http://yfrog.com/ahb97j'
+      SnipSnap.class_name_for(url).should == 'Yfrog'
+    end
+    
+    should "know the correct class name for a Yfrog.us URL" do
+      url = 'http://yfrog.us/ahb97j'
       SnipSnap.class_name_for(url).should == 'Yfrog'
     end
     
     should "know the correct class name for a Flickr URL" do
       url = 'http://flic.kr/p/64cBqN'
       SnipSnap.class_name_for(url).should == 'Flickr'
+    end
+    
+    should "use the default class when it can't match on other URLs" do
+      url = 'http://example.com/image.jpg'
+      SnipSnap.class_name_for(url).should == 'Image'
     end
     
     should "be able to create an instance of the Skitch class with the supplied URL" do
@@ -62,6 +72,13 @@ class SnipSnapTest < Test::Unit::TestCase
       SnipSnap::Flickr.expects(:new).with(url).returns('flickr')
 
       SnipSnap.from_url(url).should == 'flickr'
+    end
+    
+    should "be able to create an instance of the Image class with the supplied URL" do
+      url = 'http://example.com/image.jpg'
+      SnipSnap::Image.expects(:new).with(url).returns('image')
+
+      SnipSnap.from_url(url).should == 'image'
     end
     
     should "be able to set the Flickr API key" do

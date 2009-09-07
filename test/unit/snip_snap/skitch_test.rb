@@ -6,6 +6,11 @@ module SnipSnap
     context "An instance of the Skitch class" do
       setup { @url = 'http://skitch.com/example' }
       
+      should "know that it is an image" do
+        s = SnipSnap::Skitch.new(@url)
+        s.should be_image
+      end
+      
       should "have a URL" do
         s = SnipSnap::Skitch.new(@url)
         s.url.should == @url

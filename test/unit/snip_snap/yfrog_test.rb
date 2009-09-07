@@ -9,6 +9,11 @@ module SnipSnap
         @expanded_url = 'http://yfrog.com/api/xmlInfo?path=ahb97j'
       end
 
+      should "know that it is an image" do
+        y = SnipSnap::Yfrog.new(@url)
+        y.should be_image
+      end
+
       should "have a url derived from the source URL" do
         y = SnipSnap::Yfrog.new(@url)
         y.url.should == @expanded_url

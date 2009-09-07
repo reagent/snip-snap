@@ -9,6 +9,11 @@ module SnipSnap
         @expanded_url = 'http://www.flickr.com/photos/northernraven/3317998738/'
       end
       
+      should "know that it is an image" do
+        f = SnipSnap::Flickr.new(@url)
+        f.should be_image
+      end
+      
       should "know the identifier for the photo" do
         response = stub()
         response.stubs(:last_effective_url).with().returns(@expanded_url)

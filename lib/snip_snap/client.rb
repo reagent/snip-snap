@@ -8,6 +8,10 @@ module SnipSnap
       def initialize(url)
         @url = url
       end
+
+      def image?
+        true
+      end
       
       def fetch
         client = Curl::Easy.new(url) do |config|

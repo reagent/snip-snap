@@ -11,6 +11,7 @@ require 'snip_snap/imgly'
 require 'snip_snap/yfrog'
 require 'snip_snap/twitpic'
 require 'snip_snap/flickr'
+require 'snip_snap/image'
 
 # = SnipSnap
 #
@@ -37,11 +38,11 @@ module SnipSnap
   
   def self.host_map # :nodoc:
     {
-      'skitch.com'  => 'Skitch',
-      'img.ly'      => 'Imgly',
-      'twitpic.com' => 'Twitpic',
-      'yfrog.com'   => 'Yfrog',
-      'flic.kr'     => 'Flickr'
+      'Skitch'  => ['skitch.com'],
+      'Imgly'   => ['img.ly'],
+      'Twitpic' => ['twitpic.com'],
+      'Yfrog'   => ['yfrog.com', 'yfrog.us'],
+      'Flickr'  => ['flic.kr']
     }
   end
 
@@ -52,7 +53,9 @@ module SnipSnap
   
   def self.class_name_for(url) # :nodoc:
     uri = URI.parse(url)
-    host_map[uri.host]
+    match = host_map.detect {|k,v| v.include?(uri.host) }
+
+    match.nil? ? 'Image' : match[0]
   end
   
   # Set the Flickr API key for use by the underlying Flickr API library
