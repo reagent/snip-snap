@@ -65,10 +65,13 @@ module SnipSnap
       end
 
       should "know the URL for the image" do
+        response = stub() {|r| r.stubs(:last_effective_url).with().returns('final_url') }
+        
         i = SnipSnap::Image.new(@url)
         i.stubs(:image?).with().returns(true)
+        i.stubs(:response).with().returns(response)
         
-        i.image_url.should == @url
+        i.image_url.should == 'final_url'
       end
       
       should "return nil for the image's URL if it is not an image" do

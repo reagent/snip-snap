@@ -24,7 +24,7 @@ module SnipSnap
     end
     
     def image_url
-      url if image?
+      response.last_effective_url if image?
     end
     
   end
