@@ -4,14 +4,13 @@ module SnipSnap
     include Client
     
     request_method :head
-    
-    def url
-      identifier = @url.match(/([^\/]+)$/)[1]
-      "http://twitpic.com/show/large/#{identifier}"
+
+    def identifier
+      url.match(/([^\/]+)$/)[1]
     end
     
     def image_url
-      response.last_effective_url
+      "http://twitpic.com/show/large/#{identifier}"
     end
     
   end

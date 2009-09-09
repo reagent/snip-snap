@@ -9,21 +9,15 @@ module SnipSnap
         @expanded_url = 'http://twitpic.com/show/large/203o0'
       end
       
-      should "have a url derived from the source URL" do
+      should "know the identifier" do
         t = SnipSnap::Twitpic.new(@url)
-        t.url.should == @expanded_url
+        t.identifier.should == '203o0'
       end
       
-      should "be able to return an image url for a given url" do
-        response = stub()
-        response.stubs(:last_effective_url).with().returns(@expanded_url)
-        
+      should "have an image url derived from the source URL" do
         t = SnipSnap::Twitpic.new(@url)
-        t.stubs(:response).with().returns(response)
-        
         t.image_url.should == @expanded_url
       end
-
       
     end
     

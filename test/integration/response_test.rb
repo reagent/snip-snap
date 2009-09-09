@@ -36,7 +36,7 @@ class ResponseTest < Test::Unit::TestCase
     
     should "be able to find an image in a Twitpic URL" do
       client = SnipSnap.from_url('http://twitpic.com/h18dg')
-      client.image_url.should =~ /^http:\/\/s3\.amazonaws\.com\/twitpic\/photos\/large\/28610980\.jpg/
+      client.image_url.should == 'http://twitpic.com/show/large/h18dg'
     end
     
     should "be able to find an image in a shortened Flickr URL" do
