@@ -13,7 +13,7 @@ module SnipSnap
     end
     
     def extension
-      uri = URI.parse(url)
+      uri = URI.parse(response.last_effective_url)
       extension = File.extname(uri.path).sub(/./, '')
       
       extension unless extension == ''

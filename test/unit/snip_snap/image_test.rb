@@ -19,12 +19,20 @@ module SnipSnap
       end
 
       should "know the extension of the file referenced by the URL" do
+        response = stub() {|r| r.stubs(:last_effective_url).with().returns('http://example.com/image.jpg') }
+        
         i = SnipSnap::Image.new('http://example.com/image.jpg')
+        i.stubs(:response).with().returns(response)
+        
         i.extension.should == 'jpg'
       end
       
       should "know that the extension is nil if the URL has no file extension" do
+        response = stub() {|r| r.stubs(:last_effective_url).with().returns('http://example.com/path') }
+                
         i = SnipSnap::Image.new('http://example.com/path')
+        i.stubs(:response).with().returns(response)
+        
         i.extension.should be_nil
       end
 

@@ -27,7 +27,13 @@ end
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
-  t.test_files = FileList["test/**/*_test.rb"]
+  t.test_files = FileList["test/unit/**/*_test.rb"]
+  t.verbose = true
+end
+
+Rake::TestTask.new(:integration) do |t|
+  t.libs << 'test'
+  t.test_files = FileList["test/integration/*_test.rb"]
   t.verbose = true
 end
 
@@ -36,7 +42,7 @@ begin
 
   Rcov::RcovTask.new(:coverage) do |t|
     t.libs       = ['test']
-    t.test_files = FileList["test/**/*_test.rb"]
+    t.test_files = FileList["test/unit/**/*_test.rb"]
     t.verbose    = true
     t.rcov_opts  = ['--text-report', "-x #{Gem.path}", '-x /Library/Ruby', '-x /usr/lib/ruby']
   end

@@ -38,11 +38,11 @@ module SnipSnap
   
   def self.host_map # :nodoc:
     {
-      'skitch.com'  => 'Skitch',
-      'img.ly'      => 'Imgly',
-      'twitpic.com' => 'Twitpic',
-      /yfrog\.(com|us)$/ => 'Yfrog',
-      'flic.kr'     => 'Flickr' 
+      /^(www\.)?skitch.com/ => 'Skitch',
+      /img.ly\/[0-9a-z]+$/i => 'Imgly',
+      /^twitpic.com/        => 'Twitpic',
+      /yfrog\.(com|us)/     => 'Yfrog',
+      /flic.kr/             => 'Flickr' 
     }
   end
 
@@ -52,8 +52,10 @@ module SnipSnap
   end
   
   def self.class_name_for(url) # :nodoc:
-    uri = URI.parse(url)
-    match = host_map.detect {|k,v| Regexp.new(k) =~ uri.host }
+    uri     = URI.parse(url)
+    subject = "#{uri.host}#{uri.path}"
+
+    match = host_map.detect {|k,v| Regexp.new(k) =~ subject }
     
     match.nil? ? 'Image' : match[1]
   end
