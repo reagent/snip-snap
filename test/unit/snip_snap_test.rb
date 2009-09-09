@@ -29,6 +29,11 @@ class SnipSnapTest < Test::Unit::TestCase
       SnipSnap.class_name_for(url).should == 'Yfrog'
     end
     
+    should "know the correct class name for an expanded Yfrog URL" do
+      url = 'http://img377.yfrog.com/i/b97.jpg/'
+      SnipSnap.class_name_for(url).should == 'Yfrog'
+    end
+    
     should "know the correct class name for a Flickr URL" do
       url = 'http://flic.kr/p/64cBqN'
       SnipSnap.class_name_for(url).should == 'Flickr'

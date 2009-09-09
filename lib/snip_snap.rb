@@ -38,11 +38,11 @@ module SnipSnap
   
   def self.host_map # :nodoc:
     {
-      'Skitch'  => ['skitch.com'],
-      'Imgly'   => ['img.ly'],
-      'Twitpic' => ['twitpic.com'],
-      'Yfrog'   => ['yfrog.com', 'yfrog.us'],
-      'Flickr'  => ['flic.kr']
+      'skitch.com'  => 'Skitch',
+      'img.ly'      => 'Imgly',
+      'twitpic.com' => 'Twitpic',
+      /yfrog\.(com|us)$/ => 'Yfrog',
+      'flic.kr'     => 'Flickr' 
     }
   end
 
@@ -53,9 +53,9 @@ module SnipSnap
   
   def self.class_name_for(url) # :nodoc:
     uri = URI.parse(url)
-    match = host_map.detect {|k,v| v.include?(uri.host) }
-
-    match.nil? ? 'Image' : match[0]
+    match = host_map.detect {|k,v| Regexp.new(k) =~ uri.host }
+    
+    match.nil? ? 'Image' : match[1]
   end
   
   # Set the Flickr API key for use by the underlying Flickr API library

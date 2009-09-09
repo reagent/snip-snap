@@ -5,14 +5,9 @@ module SnipSnap
 
     request_method :get
     
-    def url
-      identifier = @url.match(/([^\/]+)$/)[1]
-      "http://yfrog.com/api/xmlInfo?path=#{identifier}"
-    end
-
     def image_url
       body = response.body_str
-      body.match(/<image_link>(.+)<\/image_link>/)[1]
+      body.match(/<link rel="image_src" href="(.+)" \/>/)[1]
     end
     
   end
