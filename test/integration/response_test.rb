@@ -44,11 +44,10 @@ class ResponseTest < Test::Unit::TestCase
       client.image_url.should == 'http://farm4.static.flickr.com/3449/3212555327_14d2d3f8b0.jpg'
     end
     
-    # TODO: make this shit work
-    # should "be able to find an image in an expanded Flickr URL" do
-    #   client = SnipSnap.from_url('http://flickr.com/photos/aureliaholandabarrigana/3212555327/')
-    #   client.image_url.should == 'http://farm4.static.flickr.com/3449/3212555327_14d2d3f8b0.jpg'
-    # end
+    should "be able to find an image in an expanded Flickr URL" do
+      client = SnipSnap.from_url('http://flickr.com/photos/aureliaholandabarrigana/3212555327/')
+      client.image_url.should == 'http://farm4.static.flickr.com/3449/3212555327_14d2d3f8b0.jpg'
+    end
     
     should "be able to find an image in an img.ly URL" do
       client = SnipSnap.from_url('http://img.ly/3ey')

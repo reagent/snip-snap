@@ -38,11 +38,11 @@ module SnipSnap
   
   def self.host_map # :nodoc:
     {
-      /^(www\.)?skitch.com/ => 'Skitch',
-      /img.ly\/[0-9a-z]+$/i => 'Imgly',
-      /^twitpic.com/        => 'Twitpic',
-      /yfrog\.(com|us)/     => 'Yfrog',
-      /flic.kr/             => 'Flickr' 
+      /^(www\.)?skitch.com/           => 'Skitch',
+      /img.ly\/[0-9a-z]+$/i           => 'Imgly',
+      /^twitpic.com/                  => 'Twitpic',
+      /yfrog\.(com|us)/               => 'Yfrog',
+      /^(flic.kr|(www\.)?flickr.com)/ => 'Flickr' 
     }
   end
 
