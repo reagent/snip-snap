@@ -14,7 +14,7 @@ spec = Gem::Specification.new do |s|
   s.author           = 'Patrick Reagan'
   s.email            = 'reaganpr@gmail.com'
   s.homepage         = 'http://sneaq.net'
-  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{lib,test}/**/*")
+  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{lib,test}/**/*") - ['test/flickr_api_key']
   # s.executables    = ['snip-snap']
   
   s.add_dependency('curb', '>= 0.5.1.0')
