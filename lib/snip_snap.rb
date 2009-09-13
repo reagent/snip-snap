@@ -11,6 +11,7 @@ require 'snip_snap/imgly'
 require 'snip_snap/yfrog'
 require 'snip_snap/twitpic'
 require 'snip_snap/flickr'
+require 'snip_snap/twitgoo'
 require 'snip_snap/image'
 
 # = SnipSnap
@@ -23,6 +24,7 @@ require 'snip_snap/image'
 # * Twitpic
 # * Yfrog
 # * Flickr
+# * Twitgoo
 #
 # To use, just point it at a URL:
 # 
@@ -38,11 +40,12 @@ module SnipSnap
   
   def self.host_map # :nodoc:
     {
-      /^(www\.)?skitch.com/           => 'Skitch',
-      /img.ly\/[0-9a-z]+$/i           => 'Imgly',
-      /^twitpic.com/                  => 'Twitpic',
-      /yfrog\.(com|us)/               => 'Yfrog',
-      /^(flic.kr|(www\.)?flickr.com)/ => 'Flickr' 
+      /^(www\.)?skitch\.com/           => 'Skitch',
+      /img\.ly\/[0-9a-z]+$/i           => 'Imgly',
+      /^twitpic\.com/                  => 'Twitpic',
+      /yfrog\.(com|us)/                => 'Yfrog',
+      /^(flic\.kr|(www\.)?flickr.com)/ => 'Flickr',
+      /^twitgoo\.com/                  => 'Twitgoo'
     }
   end
 

@@ -5,7 +5,7 @@
 SnipSnap is a Ruby library that will allow you to extract the URL of an image from
 one of many popular image sharing services.  Just give it the shortened URL and it can
 give you the full URL to the embedded image.  This library currently supports Img.ly,
-Skitch, Twitpic, Flickr, and Yfrog - others are coming.
+Skitch, Twitpic, Flickr, Yfrog, and Twitgoo - others are coming.
 
 == Installation
 

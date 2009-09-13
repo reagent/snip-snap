@@ -39,6 +39,11 @@ class SnipSnapTest < Test::Unit::TestCase
       SnipSnap.class_name_for(url).should == 'Flickr'
     end
     
+    should "know the correct class name for a Twitgoo URL" do
+      url = 'http://twitgoo.com/2r5hv'
+      SnipSnap.class_name_for(url).should == 'Twitgoo'
+    end
+    
     should "use the default class when it can't match on other URLs" do
       url = 'http://example.com/image.jpg'
       SnipSnap.class_name_for(url).should == 'Image'
@@ -77,6 +82,13 @@ class SnipSnapTest < Test::Unit::TestCase
       SnipSnap::Flickr.expects(:new).with(url).returns('flickr')
 
       SnipSnap.from_url(url).should == 'flickr'
+    end
+    
+    should "be able to create an instance of the Twitgoo class with the supplied URL" do
+      url = 'http://twitgoo.com/2r5hv'
+      SnipSnap::Twitgoo.expects(:new).with(url).returns('twitgoo')
+
+      SnipSnap.from_url(url).should == 'twitgoo'
     end
     
     should "be able to create an instance of the Image class with the supplied URL" do

@@ -16,7 +16,7 @@ class ResponseTest < Test::Unit::TestCase
     
     should "be able to find the image in a Skitch URL" do
       client = SnipSnap.from_url('http://skitch.com/reagent/bh4ei/inbox-gmail-29466-messages-130-unread')
-      client.image_url.should == 'http://img.skitch.com/20090909-bw3tnhse6rhn68erk6wpa882ea.jpg'
+      client.image_url.should == 'http://img.skitch.com/20090913-bw3tnhse6rhn68erk6wpa882ea.jpg'
     end
     
     should "be able to find an image in a shortened Yfrog URL" do
@@ -52,6 +52,11 @@ class ResponseTest < Test::Unit::TestCase
     should "be able to find an image in an img.ly URL" do
       client = SnipSnap.from_url('http://img.ly/3ey')
       client.image_url.should =~ /http:\/\/img\.ly\/media\/12434\/large_ChillPill13\.jpg/
+    end
+    
+    should "be able to find an image in a Twitgoo URL" do
+      client = SnipSnap.from_url('http://twitgoo.com/2r5hv')
+      client.image_url.should == 'http://i29.tinypic.com/9sxqpx.png'
     end
     
     should "be able to find an image from a URL with a correct MIME type" do
