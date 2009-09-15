@@ -16,7 +16,7 @@ class ResponseTest < Test::Unit::TestCase
     
     should "be able to find the image in a Skitch URL" do
       client = SnipSnap.from_url('http://skitch.com/reagent/bh4ei/inbox-gmail-29466-messages-130-unread')
-      client.image_url.should == 'http://img.skitch.com/20090913-bw3tnhse6rhn68erk6wpa882ea.jpg'
+      client.image_url.should =~ /^http:\/\/img\.skitch\.com\/\d{8}-bw3tnhse6rhn68erk6wpa882ea\.jpg$/
     end
     
     should "be able to find an image in a shortened Yfrog URL" do
@@ -47,6 +47,16 @@ class ResponseTest < Test::Unit::TestCase
     should "be able to find an image in an expanded Flickr URL" do
       client = SnipSnap.from_url('http://flickr.com/photos/aureliaholandabarrigana/3212555327/')
       client.image_url.should == 'http://farm4.static.flickr.com/3449/3212555327_14d2d3f8b0.jpg'
+    end
+    
+    should "be able to find an image in an expanded Flickr URL without a trailing slash" do
+      client = SnipSnap.from_url('http://www.flickr.com/photos/sares/3579062921')
+      client.image_url.should == 'http://farm3.static.flickr.com/2439/3579062921_d5da30b0a9.jpg'
+    end
+    
+    should "be able to find an image in an expanded Flickr photo's set URL" do
+      client = SnipSnap.from_url('http://www.flickr.com/photos/viget/3852378037/in/set-72157621982815973/')
+      client.image_url.should == 'http://farm3.static.flickr.com/2482/3852378037_11e9e3b14b.jpg'
     end
     
     should "be able to find an image in an img.ly URL" do
