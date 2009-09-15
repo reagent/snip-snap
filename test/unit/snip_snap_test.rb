@@ -2,102 +2,56 @@ require File.dirname(__FILE__) + '/../test_helper'
 
 class SnipSnapTest < Test::Unit::TestCase
 
+  def self.should_know_the_class_name_for(matcher)
+    url        = matcher.keys.first
+    class_name = matcher.values.first
+
+    should "know that the class name for #{url} is #{class_name}" do
+      SnipSnap.class_name_for(url).should == class_name
+    end
+  end
+  
+  def self.should_create_an_instance_for(matcher)
+    url        = matcher.keys.first
+    class_name = matcher.values.first
+    
+    should "be able to create an instance of the #{class_name} class for the url: '#{url}'" do
+      klass = SnipSnap.const_get(class_name)
+      klass.expects(:new).with(url).returns('instance')
+      
+      SnipSnap.from_url(url).should == 'instance'
+    end
+    
+  end
+
   context "The SnipSnap module" do
 
-    should "know the correct class name for a Skitch URL" do
-      url = 'http://skitch.com/reagent/bh4ei/bleeergh'
-      SnipSnap.class_name_for(url).should == 'Skitch'
-    end
+    should_know_the_class_name_for 'http://skitch.com/reagent/bh4ei/bleeergh'       => 'Skitch'
+    should_know_the_class_name_for 'http://img.ly/3ey'                              => 'Imgly'
+    should_know_the_class_name_for 'http://twitpic.com/203o0'                       => 'Twitpic'
+    should_know_the_class_name_for 'http://yfrog.com/ahb97j'                        => 'Yfrog'
+    should_know_the_class_name_for 'http://yfrog.us/ahb97j'                         => 'Yfrog'
+    should_know_the_class_name_for 'http://img377.yfrog.com/i/b97.jpg/'             => 'Yfrog'
+    should_know_the_class_name_for 'http://flic.kr/p/64cBqN'                        => 'Flickr'
+    should_know_the_class_name_for 'http://www.flickr.com/photos/viget/3852378037/' => 'Flickr'
+    should_know_the_class_name_for 'http://twitgoo.com/2r5hv'                       => 'Twitgoo'
+    should_know_the_class_name_for 'http://example.com/image.jpg'                   => 'Image'
     
-    should "know the correct class name for an Imgly URL" do
-      url = 'http://img.ly/3ey'
-      SnipSnap.class_name_for(url).should == 'Imgly'
-    end
-    
-    should "know the correct class name for a Twitpic URL" do
-      url = 'http://twitpic.com/203o0'
-      SnipSnap.class_name_for(url).should == 'Twitpic'
-    end
-    
-    should "know the correct class name for a Yfrog.com URL" do
-      url = 'http://yfrog.com/ahb97j'
-      SnipSnap.class_name_for(url).should == 'Yfrog'
-    end
-    
-    should "know the correct class name for a Yfrog.us URL" do
-      url = 'http://yfrog.us/ahb97j'
-      SnipSnap.class_name_for(url).should == 'Yfrog'
-    end
-    
-    should "know the correct class name for an expanded Yfrog URL" do
-      url = 'http://img377.yfrog.com/i/b97.jpg/'
-      SnipSnap.class_name_for(url).should == 'Yfrog'
-    end
-    
-    should "know the correct class name for a Flickr URL" do
-      url = 'http://flic.kr/p/64cBqN'
-      SnipSnap.class_name_for(url).should == 'Flickr'
-    end
-    
-    should "know the correct class name for a Twitgoo URL" do
-      url = 'http://twitgoo.com/2r5hv'
-      SnipSnap.class_name_for(url).should == 'Twitgoo'
-    end
-    
-    should "use the default class when it can't match on other URLs" do
-      url = 'http://example.com/image.jpg'
-      SnipSnap.class_name_for(url).should == 'Image'
-    end
-    
-    should "be able to create an instance of the Skitch class with the supplied URL" do
-      url = 'http://skitch.com/reagent/bh4ei/bleeergh'
-      SnipSnap::Skitch.expects(:new).with(url).returns('skitch')
-      
-      SnipSnap.from_url(url).should == 'skitch'
-    end
-    
-    should "be able to create an instance of the Imgly class with the supplied URL" do
-      url = 'http://img.ly/3ey'
-      SnipSnap::Imgly.expects(:new).with(url).returns('imgly')
-      
-      SnipSnap.from_url(url).should == 'imgly'
-    end
-    
-    should "be able to create an instance of the Twitpic class with the supplied URL" do
-      url = 'http://twitpic.com/203o0'
-      SnipSnap::Twitpic.expects(:new).with(url).returns('twitpic')
+    should_know_the_class_name_for 'http://www.flickr.com/photos/viget/3852378037/in/set-72157621982815973/' => 'Flickr'
 
-      SnipSnap.from_url(url).should == 'twitpic'
-    end
+    should_create_an_instance_for 'http://skitch.com/reagent/bh4ei/bleeergh'       => 'Skitch'
+    should_create_an_instance_for 'http://img.ly/3ey'                              => 'Imgly'
+    should_create_an_instance_for 'http://twitpic.com/203o0'                       => 'Twitpic'
+    should_create_an_instance_for 'http://yfrog.com/ahb97j'                        => 'Yfrog'
+    should_create_an_instance_for 'http://yfrog.us/ahb97j'                         => 'Yfrog'
+    should_create_an_instance_for 'http://img377.yfrog.com/i/b97.jpg/'             => 'Yfrog'
+    should_create_an_instance_for 'http://flic.kr/p/64cBqN'                        => 'Flickr'
+    should_create_an_instance_for 'http://www.flickr.com/photos/viget/3852378037/' => 'Flickr'
+    should_create_an_instance_for 'http://twitgoo.com/2r5hv'                       => 'Twitgoo'
+    should_create_an_instance_for 'http://example.com/image.jpg'                   => 'Image'
 
-    should "be able to create an instance of the Yfrog class with the supplied URL" do
-      url = 'http://yfrog.com/ahb97j'
-      SnipSnap::Yfrog.expects(:new).with(url).returns('yfrog')
+    should_create_an_instance_for 'http://www.flickr.com/photos/viget/3852378037/in/set-72157621982815973/' => 'Flickr'
 
-      SnipSnap.from_url(url).should == 'yfrog'
-    end
-    
-    should "be able to create an instance of the Flickr class with the supplied URL" do
-      url = 'http://flic.kr/p/64cBqN'
-      SnipSnap::Flickr.expects(:new).with(url).returns('flickr')
-
-      SnipSnap.from_url(url).should == 'flickr'
-    end
-    
-    should "be able to create an instance of the Twitgoo class with the supplied URL" do
-      url = 'http://twitgoo.com/2r5hv'
-      SnipSnap::Twitgoo.expects(:new).with(url).returns('twitgoo')
-
-      SnipSnap.from_url(url).should == 'twitgoo'
-    end
-    
-    should "be able to create an instance of the Image class with the supplied URL" do
-      url = 'http://example.com/image.jpg'
-      SnipSnap::Image.expects(:new).with(url).returns('image')
-
-      SnipSnap.from_url(url).should == 'image'
-    end
-    
     should "be able to set the Flickr API key" do
       key = 'abc123'
       
